@@ -1,0 +1,37 @@
+{
+  "issued_at": "2026-04-09 14:39",
+  "valid_until": "2026-04-10 14:39",
+  "manager": "LCK",
+  "inbound_staff": "3:1",
+  "outbound_staff": "3:1",
+  "truck_type": "5톤",
+  "inbound_total": "137만원",
+  "outbound_total": "190만원",
+  "deposit_total": "140만원",
+  "grand_total": "467만원",
+  "storage_period": "260629-260828",
+  "storage_total": "100만원",
+  "storage_note": "보관요금은 해당기간 동안 총 금액으로 안내드렸습니다. (해당기간 이후 일자별 정산: 1일 17,000원)",
+  "quote_no": "NS-20260409-789-003",
+  "detail_rows": [],
+  "detail_sections": [
+    {
+      "title": "입고 세부항목",
+      "rows": [
+        {
+          "label": "사다리차 비용",
+          "amount": "12만원"
+        }
+      ]
+    },
+    {
+      "title": "출고 세부항목",
+      "rows": [
+        {
+          "label": "1층 작업 비용",
+          "amount": "20만원"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title }}</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f2f4f7;
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      color: #222;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #fff;
+      margin: 8mm auto;
+      padding: 12mm 10mm 16mm 10mm;
+      position: relative;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8mm;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 54px;
+      height: 54px;
+      border: 6px solid #1770b8;
+      border-bottom-width: 10px;
+      clip-path: polygon(50% 0%, 100% 34%, 100% 100%, 0% 100%, 0% 34%);
+      position: relative;
+    }
+
+    .brand-icon::before,
+    .brand-icon::after {
+      content: "";
+      position: absolute;
+      bottom: 8px;
+      background: #1770b8;
+    }
+
+    .brand-icon::before {
+      left: 8px;
+      width: 8px;
+      height: 14px;
+    }
+
+    .brand-icon::after {
+      left: 20px;
+      width: 12px;
+      height: 24px;
+      box-shadow: 16px 6px 0 0 #1770b8;
+    }
+
+    .brand-text .ko {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
+    .brand-text .en {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: #777;
+      margin-left: 28px;
+      margin-top: 2px;
+    }
+
+    .title {
+      flex: 1;
+      text-align: center;
+      font-size: 31px;
+      font-weight: 800;
+      color: #0c3769;
+      letter-spacing: 0.28em;
+      padding-top: 4px;
+    }
+
+    .meta {
+      width: 285px;
+      font-size: 12px;
+      line-height: 1.55;
+      text-align: right;
+      font-weight: 700;
+    }
+
+    .meta span {
+      font-weight: 400;
+    }
+
+    .top-line {
+      border-top: 2px solid #1c5f9f;
+      margin-bottom: 8mm;
+    }
+
+    .section {
+      border: 2px solid #1c5f9f;
+      border-radius: 4px;
+      margin-bottom: 8mm;
+      overflow: hidden;
+    }
+
+    .section-title {
+      height: 18mm;
+      border-bottom: 2px solid #1c5f9f;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #0c3769;
+      letter-spacing: 0.18em;
+    }
+
+    .section-body {
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+
+    .customer-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 110px 1fr;
+      align-items: center;
+      min-height: 44px;
+      font-size: 12px;
+    }
+
+    .label-strong {
+      font-weight: 800;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8mm;
+      margin-bottom: 8mm;
+    }
+
+    .mini-box {
+      border: 2px solid #1c5f9f;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .mini-title {
+      height: 16mm;
+      border-bottom: 2px solid #1c5f9f;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0c3769;
+      letter-spacing: 0.18em;
+    }
+
+    .mini-body {
+      padding: 12px;
+      min-height: 96px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      column-gap: 4px;
+      row-gap: 4px;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr 160px 1fr;
+      row-gap: 10px;
+      font-size: 12px;
+      align-items: center;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 12px;
+    }
+
+    .summary-table td {
+      border: 1px solid #8fb2d3;
+      padding: 10px 12px;
+      height: 34px;
+    }
+
+    .summary-table td:first-child {
+      width: 45%;
+    }
+
+    .summary-table .sum-label {
+      font-weight: 800;
+    }
+
+    .summary-table .sum-total {
+      font-size: 28px;
+      font-weight: 900;
+      color: #0c3769;
+      text-align: right;
+    }
+
+    .summary-table .right {
+      text-align: right;
+    }
+
+    .storage-summary {
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .storage-summary strong {
+      font-weight: 800;
+    }
+
+    .footer-no {
+      position: absolute;
+      right: 14mm;
+      bottom: 12mm;
+      font-size: 12px;
+      color: #4a4a4a;
+    }
+
+    .simple-line {
+      min-height: 22px;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .detail-group + .detail-group {
+      margin-top: 10px;
+    }
+
+    .detail-group-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0c3769;
+      margin-bottom: 4px;
+    }
+
+    .detail-table td {
+      padding: 7px 0;
+      border-bottom: 1px solid #d7e3ef;
+    }
+
+    .detail-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .list-block {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .plain-lines {
+      font-size: 12px;
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .page {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-icon"></div>
+        <div class="brand-text">
+          <div class="ko">{{ brand_ko }}</div>
+          <div class="en">{{ brand_en }}</div>
+        </div>
+      </div>
+
+      <div class="title">{{ title }}</div>
+
+      <div class="meta">
+        발행일: <span>{{ issued_at }}</span><br>
+        유효기간: <span>{{ valid_until }}</span><br>
+        담당자: <span>{{ manager }}</span><br>
+        <span>{{ notice }}</span>
+      </div>
+    </div>
+
+    <div class="top-line"></div>
+
+    <section class="section">
+      <div class="section-title">고객정보</div>
+      <div class="section-body">
+        <div class="customer-row">
+          <div class="label-strong">고객명</div>
+          <div>{{ customer_name }}</div>
+          <div class="label-strong">연락처</div>
+          <div>{{ customer_phone }}</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <div class="mini-box">
+        <div class="mini-title">출발지</div>
+        <div class="mini-body">
+          <div class="mini-grid">
+            <div class="label-strong">주소</div>
+            <div>{{ origin_address }}</div>
+          </div>
+          <br>
+          <div><span class="label-strong">입고일자:</span> {{ inbound_date }}</div>
+          <div><span class="label-strong">입고 시작:</span> {{ inbound_start }}</div>
+        </div>
+      </div>
+
+      <div class="mini-box">
+        <div class="mini-title">도착지</div>
+        <div class="mini-body">
+          <div class="mini-grid">
+            <div class="label-strong">주소</div>
+            <div>{{ destination_address }}</div>
+          </div>
+          <br>
+          <div><span class="label-strong">출고일자:</span> {{ outbound_date }}</div>
+          <div><span class="label-strong">출고 시작:</span> {{ outbound_start }}</div>
+        </div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-title">작업정보</div>
+      <div class="section-body">
+        <div class="work-grid">
+          <div class="label-strong">입고 작업유형</div>
+          <div>{{ inbound_work_type }}</div>
+          <div class="label-strong">출고 작업유형</div>
+          <div>{{ outbound_work_type }}</div>
+
+          <div class="label-strong">입고 인원(남:녀)</div>
+          <div>{{ inbound_staff }}</div>
+          <div class="label-strong">출고 인원(남:녀)</div>
+          <div>{{ outbound_staff }}</div>
+
+          <div class="label-strong">운반차량</div>
+          <div>{{ truck_type }}</div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">비용요약 (단위: 만원)</div>
+      <div class="section-body">
+        <table class="summary-table">
+          <tr>
+            <td>입고 총액</td>
+            <td class="right">{{ inbound_total }}</td>
+          </tr>
+          <tr>
+            <td>출고 총액</td>
+            <td class="right">{{ outbound_total }}</td>
+          </tr>
+          <tr>
+            <td>계약금</td>
+            <td class="right">{{ deposit_total }}</td>
+          </tr>
+          <tr>
+            <td class="sum-label">합계</td>
+            <td class="sum-total">{{ grand_total }}</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">보관비요약</div>
+      <div class="section-body">
+        <div class="storage-summary">
+          보관기간 <strong>{{ storage_period }}</strong> · 보관비 총액 <strong>{{ storage_total }}</strong><br>
+          {{ storage_note }}
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-no">견적서 No: {{ quote_no }}</div>
+  </div>
+
+  <div class="page">
+    <section class="section">
+      <div class="section-title">세부비용 (단위: 만원)</div>
+      <div class="section-body">
+        {{ detail_sections_html }}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">고객요청사항</div>
+      <div class="section-body">
+        <div class="simple-line">{{ request_text }}</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">보관짐/폐기짐</div>
+      <div class="section-body">
+        <ul class="list-block">
+          {{ stored_items_html }}
+        </ul>
+        <div class="plain-lines" style="margin-top:8px;">{{ discarded_title }}</div>
+        <ul class="list-block" style="margin-top:4px;">
+          {{ discarded_items_html }}
+        </ul>
+      </div>
+    </section>
+
+    <div class="footer-no">견적서 No: {{ quote_no }}</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+{
+  "staff_recommendation": {
+    "1톤": {
+      "default": "1:0"
+    },
+    "2.5톤": {
+      "default": "2:1"
+    },
+    "3-4톤": {
+      "default": "3:1"
+    },
+    "5톤": {
+      "default": "3:1"
+    },
+    "6톤": {
+      "default": "4:1"
+    },
+    "7톤": {
+      "default": "5:1"
+    }
+  },
+  "base_amount_recommendation": {
+    "1톤": {
+      "inbound": {
+        "min_manwon": 60,
+        "max_manwon": 90
+      },
+      "outbound": {
+        "min_manwon": 70,
+        "max_manwon": 100
+      }
+    },
+    "2톤": {
+      "inbound": {
+        "min_manwon": 70,
+        "max_manwon": 100
+      },
+      "outbound": {
+        "min_manwon": 100,
+        "max_manwon": 130
+      }
+    },
+    "2.5톤": {
+      "inbound": {
+        "min_manwon": 75,
+        "max_manwon": 105
+      },
+      "outbound": {
+        "min_manwon": 105,
+        "max_manwon": 135
+      }
+    },
+    "3-4톤": {
+      "inbound": {
+        "min_manwon": 90,
+        "max_manwon": 120
+      },
+      "outbound": {
+        "min_manwon": 125,
+        "max_manwon": 155
+      }
+    },
+    "5톤": {
+      "inbound": {
+        "min_manwon": 110,
+        "max_manwon": 140
+      },
+      "outbound": {
+        "min_manwon": 155,
+        "max_manwon": 185
+      }
+    },
+    "6톤": {
+      "inbound": {
+        "min_manwon": 120,
+        "max_manwon": 150
+      },
+      "outbound": {
+        "min_manwon": 175,
+        "max_manwon": 205
+      }
+    },
+    "7톤": {
+      "inbound": {
+        "min_manwon": 145,
+        "max_manwon": 175
+      },
+      "outbound": {
+        "min_manwon": 200,
+        "max_manwon": 230
+      }
+    }
+  },
+  "work_type_adjustments": {
+    "E/V작업": {
+      "label": "E/V 작업",
+      "inbound": {
+        "min_manwon": 0,
+        "max_manwon": 0
+      },
+      "outbound": {
+        "min_manwon": 0,
+        "max_manwon": 0
+      }
+    },
+    "1층작업": {
+      "label": "1층 작업 비용",
+      "inbound": {
+        "min_manwon": 20,
+        "max_manwon": 35
+      },
+      "outbound": {
+        "min_manwon": 15,
+        "max_manwon": 25
+      }
+    },
+    "사다리차 작업": {
+      "label": "사다리차 비용",
+      "inbound": {
+        "min_manwon": 5,
+        "max_manwon": 20
+      },
+      "outbound": {
+        "min_manwon": 10,
+        "max_manwon": 25
+      }
+    },
+    "계단/반지하": {
+      "label": "계단/반지하 작업 비용",
+      "inbound": {
+        "min_manwon": 60,
+        "max_manwon": 80
+      },
+      "outbound": {
+        "min_manwon": 60,
+        "max_manwon": 80
+      },
+      "note": "조건별"
+    },
+    "출고지 미정": {
+      "label": "출고지 미정 조정",
+      "inbound": {
+        "min_manwon": 0,
+        "max_manwon": 0
+      },
+      "outbound": {
+        "min_manwon": -20,
+        "max_manwon": -10
+      }
+    }
+  },
+  "deposit_recommendation": [
+    {
+      "min_total_manwon": 0,
+      "max_total_manwon": 220,
+      "deposit_manwon": 100
+    },
+    {
+      "min_total_manwon": 221,
+      "max_total_manwon": 250,
+      "deposit_manwon": 110
+    },
+    {
+      "min_total_manwon": 251,
+      "max_total_manwon": 290,
+      "deposit_manwon": 130
+    },
+    {
+      "min_total_manwon": 291,
+      "max_total_manwon": 330,
+      "deposit_manwon": 140
+    },
+    {
+      "min_total_manwon": 331,
+      "max_total_manwon": 370,
+      "deposit_manwon": 150
+    },
+    {
+      "min_total_manwon": 371,
+      "deposit_manwon": 180
+    }
+  ],
+  "selection_policy": {
+    "staff": "default",
+    "amount": "midpoint"
+  }
+}

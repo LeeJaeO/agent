@@ -1,0 +1,25 @@
+{
+  "customer_name": "고객명",
+  "customer_phone": "010-12345678",
+  "origin_address": "용인시",
+  "inbound_date": "2026.06.29",
+  "inbound_start": "오전",
+  "destination_address": "용인시 기흥구",
+  "outbound_date": "2026.08.28",
+  "outbound_start": "오전",
+  "inbound_work_type": "사다리차작업",
+  "outbound_work_type": "1층작업",
+  "request_text": "매트리스 건식 클리닉 (서비스)",
+  "stored_items": [
+    "[안방] 침대, 화장대, 협탁, 소형가전",
+    "[작은방1] 옷짐, 옷행거, 리빙박스, 스타일러, 건조기",
+    "[작은방2] 책상, 의자, 수납선반",
+    "[거실] 협탁",
+    "[주방] 식세기, 소형가전, 식기류, 그릇장, 식탁, 의자",
+    "[현관,화장실] 신발"
+  ],
+  "discarded_items": [
+    "세탁기(통돌이)",
+    "옷장"
+  ]
+}

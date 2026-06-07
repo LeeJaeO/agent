@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agent Volume UI</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>Agent Volume UI</h1>
+          <p id="agentRoot"></p>
+        </div>
+        <div class="status-pill" id="statusPill">대기</div>
+      </header>
+
+      <main class="workspace">
+        <section class="control-panel" aria-label="pipeline controls">
+          <div class="panel-heading">
+            <h2>실행 설정</h2>
+            <button class="icon-button" id="refreshButton" title="사진 목록 새로고침" aria-label="사진 목록 새로고침">
+              <span aria-hidden="true">↻</span>
+            </button>
+          </div>
+
+          <label class="field">
+            <span>사진 폴더</span>
+            <input id="imageDir" type="text" autocomplete="off" />
+          </label>
+
+          <label class="field">
+            <span>물품 파일</span>
+            <input id="textFile" type="text" autocomplete="off" />
+          </label>
+
+          <label class="field">
+            <span>출력 폴더</span>
+            <input id="outputDir" type="text" autocomplete="off" />
+          </label>
+
+          <section class="pdf-settings" aria-label="PDF 정보">
+            <div class="panel-heading">
+              <h2>PDF 정보</h2>
+            </div>
+            <label class="field">
+              <span>고객명</span>
+              <input data-pdf-key="customer_name" type="text" autocomplete="off" />
+            </label>
+            <label class="field">
+              <span>전화번호</span>
+              <input data-pdf-key="customer_phone" type="text" autocomplete="off" placeholder="010-1234-5678" />
+            </label>
+            <label class="field">
+              <span>출발지 주소</span>
+              <input data-pdf-key="origin_address" type="text" autocomplete="off" />
+            </label>
+            <div class="field-grid">
+              <label class="field">
+                <span>입고일</span>
+                <input data-pdf-key="inbound_date" type="text" autocomplete="off" placeholder="2026.06.29" />
+              </label>
+              <label class="field">
+                <span>입고 시간대</span>
+                <select data-pdf-key="inbound_start">
+                  <option value=""></option>
+                  <option value="오전">오전</option>
+                  <option value="오후">오후</option>
+                </select>
+              </label>
+            </div>
+            <label class="field">
+              <span>도착지 주소</span>
+              <input data-pdf-key="destination_address" type="text" autocomplete="off" />
+            </label>
+            <div class="field-grid">
+              <label class="field">
+                <span>출고일</span>
+                <input data-pdf-key="outbound_date" type="text" autocomplete="off" placeholder="2026.08.28" />
+              </label>
+              <label class="field">
+                <span>출고 시간대</span>
+                <select data-pdf-key="outbound_start">
+                  <option value=""></option>
+                  <option value="오전">오전</option>
+                  <option value="오후">오후</option>
+                </select>
+              </label>
+            </div>
+            <label class="field">
+              <span>입고 작업</span>
+              <select data-pdf-key="inbound_work_type">
+                <option value=""></option>
+                <option value="1층작업">1층작업</option>
+                <option value="사다리차작업">사다리차작업</option>
+                <option value="계단/반지하">계단/반지하</option>
+                <option value="E/V작업">E/V작업</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>출고 작업</span>
+              <select data-pdf-key="outbound_work_type">
+                <option value=""></option>
+                <option value="1층작업">1층작업</option>
+                <option value="사다리차작업">사다리차작업</option>
+                <option value="계단/반지하">계단/반지하</option>
+                <option value="E/V작업">E/V작업</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>특이사항</span>
+              <textarea data-pdf-key="request_text" rows="3"></textarea>
+            </label>
+          </section>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Depth</span>
+              <select id="depthBackend"></select>
+            </label>
+            <label class="field">
+              <span>Seg</span>
+              <select id="segBackend"></select>
+            </label>
+          </div>
+
+          <div class="button-row">
+            <button class="primary-button" id="runButton">
+              <span aria-hidden="true">▶</span>
+              <span>실행</span>
+            </button>
+            <button class="secondary-button" id="stopButton" disabled>
+              <span aria-hidden="true">■</span>
+              <span>중지</span>
+            </button>
+          </div>
+
+          <div class="command-box">
+            <div class="subheading">명령어</div>
+            <pre id="commandPreview"></pre>
+          </div>
+        </section>
+
+        <section class="main-panel">
+          <div class="metrics" id="metrics">
+            <div class="metric">
+              <span>총 부피</span>
+              <strong id="metricVolume">-</strong>
+            </div>
+            <div class="metric">
+              <span>추천 트럭</span>
+              <strong id="metricTruck">-</strong>
+            </div>
+            <div class="metric">
+              <span>처리</span>
+              <strong id="metricProcessed">-</strong>
+            </div>
+            <div class="metric">
+              <span>측정/저장</span>
+              <strong id="metricElapsed">-</strong>
+            </div>
+          </div>
+
+          <section class="surface current-image-surface hidden" id="currentImageSurface">
+            <div class="panel-heading">
+              <h2>현재 진행 이미지</h2>
+              <span class="count-badge" id="currentImageProgress">-</span>
+            </div>
+            <div class="current-image-body">
+              <img id="currentImagePreview" alt="현재 진행 이미지" />
+              <div class="current-image-meta">
+                <strong id="currentImageName">-</strong>
+                <span id="currentImageStatus">대기</span>
+              </div>
+            </div>
+          </section>
+
+          <div class="split-panel">
+            <section class="surface">
+              <div class="panel-heading">
+                <h2>입력 사진</h2>
+                <span class="count-badge" id="imageCount">0</span>
+              </div>
+              <div class="image-list" id="imageList"></div>
+            </section>
+
+            <section class="surface">
+              <div class="panel-heading">
+                <h2>로그</h2>
+                <span class="count-badge" id="jobElapsed">0.0s</span>
+              </div>
+              <pre class="log-box" id="logBox"></pre>
+            </section>
+          </div>
+
+          <section class="surface results-surface">
+            <div class="panel-heading">
+              <h2>결과</h2>
+              <div class="result-actions">
+                <a class="pdf-link hidden" id="pdfLink" href="#">PDF</a>
+                <span class="count-badge" id="resultPath">-</span>
+              </div>
+            </div>
+            <div class="category-row" id="categoryRow"></div>
+            <div class="result-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>이미지</th>
+                    <th>부피</th>
+                    <th>감지</th>
+                    <th>측정</th>
+                    <th>저장</th>
+                  </tr>
+                </thead>
+                <tbody id="resultRows"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="surface output-images-surface">
+            <div class="panel-heading">
+              <h2>저장 이미지</h2>
+              <span class="count-badge" id="outputImageCount">0</span>
+            </div>
+            <div class="output-image-grid" id="outputImageGrid"></div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/app.js?v=20260605-json-only"></script>
+  </body>
+</html>
